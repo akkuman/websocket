@@ -37,11 +37,11 @@ func main() {
 	origin := "http://localhost/"
 	url := "ws://localhost:12345/ws"
     ws := websocket.NewConfig(url, origin, WithSourceHost("baidu.com"), WithTlsConfig(&tls.Config{
-			InsecureSkipVerify: true,
+        InsecureSkipVerify: true,
     }))
-    
+
     conn, err := websocket.DialConfig(cfg)
-    
+
     ...
 }
 ```

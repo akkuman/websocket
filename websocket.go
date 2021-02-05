@@ -107,6 +107,8 @@ type Config struct {
 	handshakeData map[string]string
 }
 
+type ConfigOption func(*Config)
+
 // serverHandshaker is an interface to handle WebSocket server side handshake.
 type serverHandshaker interface {
 	// ReadHandshake reads handshake request message from client.
@@ -188,14 +190,17 @@ type Conn struct {
 }
 
 // WithSourceHost Set Host in WebSocket HandShark Header
-func (conf *Config) WithSourceHost(sourceHost string) *Config {
-	conf.SourceHost = sourceHost
-	return conf
+func WithSourceHost(sourceHost string) ConfigOption {
+	return func(o *Config) {
+		o.SourceHost = sourceHost
+	}
 }
 
-func (conf *Config) WithTlsConfig(tlsConfig *tls.Config) *Config {
-	conf.TlsConfig = tlsConfig
-	return conf
+// WithTLSConfig set tls config
+func WithTLSConfig(tlsConfig *tls.Config) ConfigOption {
+	return func(o *Config) {
+		o.TlsConfig = tlsConfig
+	}
 }
 
 // Read implements the io.Reader interface:

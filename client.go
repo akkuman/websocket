@@ -23,7 +23,7 @@ func (e *DialError) Error() string {
 }
 
 // NewConfig creates a new WebSocket config for client connection.
-func NewConfig(server, origin string) (config *Config, err error) {
+func NewConfig(server, origin string, options ...ConfigOption) (config *Config, err error) {
 	config = new(Config)
 	config.Version = ProtocolVersionHybi13
 	config.Location, err = url.ParseRequestURI(server)
@@ -35,6 +35,11 @@ func NewConfig(server, origin string) (config *Config, err error) {
 		return
 	}
 	config.Header = http.Header(make(map[string][]string))
+
+	for _, o := range options {
+		o(config)
+	}
+
 	return
 }
 

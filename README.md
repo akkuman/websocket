@@ -36,7 +36,7 @@ import (
 func main() {
 	origin := "http://localhost/"
 	url := "ws://localhost:12345/ws"
-    ws := websocket.NewConfig(url, origin, WithSourceHost("baidu.com"), WithTlsConfig(&tls.Config{
+    ws := websocket.NewConfig(url, origin, websocket.WithSourceHost("baidu.com"), websocket.WithTLSConfig(&tls.Config{
         InsecureSkipVerify: true,
     }))
 

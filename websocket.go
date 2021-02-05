@@ -10,7 +10,7 @@
 //
 //     https://godoc.org/github.com/gorilla/websocket
 //     https://godoc.org/nhooyr.io/websocket
-package websocket // import "golang.org/x/net/websocket"
+package websocket // import "github.com/akkuman/websocket"
 
 import (
 	"bufio"
@@ -82,6 +82,9 @@ func (addr *Addr) Network() string { return "websocket" }
 type Config struct {
 	// A WebSocket server address.
 	Location *url.URL
+
+	// Host in Websocket HandShark Header
+	SourceHost string
 
 	// A Websocket client origin.
 	Origin *url.URL
@@ -182,6 +185,17 @@ type Conn struct {
 	// MaxPayloadBytes limits the size of frame payload received over Conn
 	// by Codec's Receive method. If zero, DefaultMaxPayloadBytes is used.
 	MaxPayloadBytes int
+}
+
+// WithSourceHost Set Host in WebSocket HandShark Header
+func (conf *Config) WithSourceHost(sourceHost string) *Config {
+	conf.SourceHost = sourceHost
+	return conf
+}
+
+func (conf *Config) WithTlsConfig(tlsConfig *tls.Config) *Config {
+	conf.TlsConfig = tlsConfig
+	return conf
 }
 
 // Read implements the io.Reader interface:

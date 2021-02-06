@@ -409,7 +409,7 @@ func hybiClientHandshake(config *Config, br *bufio.Reader, bw *bufio.Writer) (er
 	// intermediary must remove any IPv6 zone identifier attached
 	// to an outgoing URI.
 	sourceHost := config.SourceHost
-	if sourceHost != "" {
+	if sourceHost == "" {
 		sourceHost = config.Location.Host
 	}
 	bw.WriteString("Host: " + removeZone(sourceHost) + "\r\n")
